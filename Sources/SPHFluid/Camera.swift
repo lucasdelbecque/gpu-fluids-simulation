@@ -81,9 +81,26 @@ final class OrbitCamera {
 // MARK: - simd_float4x4 convenience
 
 extension simd_float4x4 {
-    /// Rotation around the Z axis (radians, right-hand rule).
-    init(rotationZ angle: Float) {
-        let c = cos(angle), s = sin(angle)
+    init(rotationX a: Float) {
+        let c = cos(a), s = sin(a)
+        self = simd_float4x4(columns: (
+            SIMD4<Float>(1,  0, 0, 0),
+            SIMD4<Float>(0,  c, s, 0),
+            SIMD4<Float>(0, -s, c, 0),
+            SIMD4<Float>(0,  0, 0, 1)
+        ))
+    }
+    init(rotationY a: Float) {
+        let c = cos(a), s = sin(a)
+        self = simd_float4x4(columns: (
+            SIMD4<Float>(c, 0, -s, 0),
+            SIMD4<Float>(0, 1,  0, 0),
+            SIMD4<Float>(s, 0,  c, 0),
+            SIMD4<Float>(0, 0,  0, 1)
+        ))
+    }
+    init(rotationZ a: Float) {
+        let c = cos(a), s = sin(a)
         self = simd_float4x4(columns: (
             SIMD4<Float>( c, s, 0, 0),
             SIMD4<Float>(-s, c, 0, 0),
@@ -91,8 +108,6 @@ extension simd_float4x4 {
             SIMD4<Float>( 0, 0, 0, 1)
         ))
     }
-
-    /// Translation matrix.
     init(translation t: SIMD3<Float>) {
         self = simd_float4x4(columns: (
             SIMD4<Float>(1, 0, 0, 0),

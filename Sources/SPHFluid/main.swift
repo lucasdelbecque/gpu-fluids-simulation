@@ -5,10 +5,7 @@
 // │  CONTROLS                                                   │
 // │  Mouse drag      Orbit camera                               │
 // │  Scroll          Zoom                                       │
-// │  Space           Toggle auto-oscillation / manual mode      │
-// │  ←  /  →         Impulse (auto) or tilt left/right (manual) │
-// │  ↑  /  ↓         Oscillation amplitude  ±5°                 │
-// │  [  /  ]         Oscillation frequency  ±0.05 Hz            │
+// │  ↑  /  ↓         Motion amplitude  ±5°                      │
 // │  R               Reset particles                            │
 // │  Q / Esc         Quit                                       │
 // └─────────────────────────────────────────────────────────────┘
@@ -52,37 +49,13 @@ final class FluidView: MTKView {
 
     override func keyDown(with e: NSEvent) {
         switch e.keyCode {
-
-        case 49: // Space — toggle auto/manual oscillation
-            renderer.autoOscillate.toggle()
-            let mode = renderer.autoOscillate ? "AUTO" : "MANUAL"
-            print("[slosh] mode → \(mode)")
-
-        case 123: // ← — impulse left / tilt left
-            renderer.applyTiltImpulse(-0.55)
-
-        case 124: // → — impulse right / tilt right
-            renderer.applyTiltImpulse( 0.55)
-
-        case 126: // ↑ — more amplitude
-            renderer.increaseAmplitude()
-
-        case 125: // ↓ — less amplitude
-            renderer.decreaseAmplitude()
-
-        case 30:  // ] — higher frequency
-            renderer.increaseFrequency()
-
-        case 33:  // [ — lower frequency
-            renderer.decreaseFrequency()
-
-        case 15:  // R — reset
+        case 126: renderer.increaseAmplitude()   // ↑
+        case 125: renderer.decreaseAmplitude()   // ↓
+        case 15:                                 // R — reset
             renderer.resetSimulation()
             print("[slosh] particles reset")
-
-        case 12, 53: // Q / Esc — quit
+        case 12, 53:                             // Q / Esc — quit
             NSApplication.shared.terminate(nil)
-
         default:
             super.keyDown(with: e)
         }
@@ -106,10 +79,7 @@ print("""
 ╠══════════════════════════════════════════════════════╣
 ║  Mouse drag   : orbit camera                         ║
 ║  Scroll       : zoom                                 ║
-║  Space        : toggle auto / manual tilt            ║
-║  ← / →        : tilt impulse (auto) or hold (manual) ║
-║  ↑ / ↓        : oscillation amplitude  ±5°           ║
-║  [ / ]        : oscillation frequency  ±0.05 Hz      ║
+║  ↑ / ↓        : motion amplitude  ±5°                ║
 ║  R            : reset particles                      ║
 ║  Q / Esc      : quit                                 ║
 ╚══════════════════════════════════════════════════════╝

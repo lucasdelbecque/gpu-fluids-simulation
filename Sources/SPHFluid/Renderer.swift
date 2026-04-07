@@ -39,21 +39,18 @@ final class Renderer: NSObject, MTKViewDelegate {
     // dt=0.0025 × 6 steps = 0.015 s/frame ≈ real-time at 60 fps.
     var stepsPerFrame: Int = 6
 
-    // ── Tilt / sloshing state ─────────────────────────────────────────────
-    /// true = box oscillates automatically; false = user controls it manually
-    var autoOscillate:   Bool  = true
-    /// Current tilt angle of the box (radians, rotation around world Z)
-    private var tiltAngle:     Float  = 0
-    /// Angular velocity (rad/s) — used in manual mode or for impulses
-    private var tiltVelocity:  Float  = 0
-    /// Sinusoidal oscillation amplitude (radians)
-    var oscAmplitude:    Float  = 0.38    // ≈ 22° — dramatic enough to create runup
-    /// Sinusoidal oscillation frequency (Hz)
-    /// Natural sloshing frequency for L=1.76m, d=0.37m:
-    ///   f = (1/2π)·√(π·g/L · tanh(π·d/L)) ≈ 0.50 Hz  (resonance → max wave height)
-    var oscFrequency:    Float  = 0.50
-    /// Wall-clock time accumulator (seconds)
+    // ── 3-axis smooth random motion ───────────────────────────────────────
+    // Each axis is driven by a sum of sinusoids at mutually irrational
+    // frequencies → the motion never repeats, always feels organic.
+    //
+    // Current Euler angles (box-local, applied as Rx·Ry·Rz):
+    private var angleX: Float = 0   // pitch  (front/back tilt)
+    private var angleY: Float = 0   // yaw    (slow twist around vertical)
+    private var angleZ: Float = 0   // roll   (left/right tilt — primary sloshing axis)
     private var simTime: Double = 0
+
+    // Amplitude envelope — user-controllable
+    var oscAmplitude: Float = 0.35  // ≈ 20°  (applied to all axes, Y gets ×0.3)
 
     // MARK: - Init
 
@@ -176,45 +173,71 @@ final class Renderer: NSObject, MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
-        // ── 1. Update tilt ─────────────────────────────────────────────────
+        // ── 1. Smooth random 3-axis motion ─────────────────────────────────
         let dt = Float(1.0 / Double(max(view.preferredFramesPerSecond, 1)))
         simTime += Double(dt)
+        let t = Float(simTime)
 
-        if autoOscillate {
-            // Smooth sinusoidal rocking
-            tiltAngle = oscAmplitude * sin(Float(2 * Double.pi) * oscFrequency * Float(simTime))
-            // Allow impulse perturbations on top of the base oscillation
-            tiltAngle    += tiltVelocity * dt
-            tiltVelocity *= 0.88          // quickly damp the perturbation
-        } else {
-            // Free tilt with friction (spring towards zero)
-            tiltVelocity -= tiltAngle * 1.2 * dt    // weak restoring force
-            tiltVelocity *= 0.96                     // air friction
-            tiltAngle    += tiltVelocity * dt
-            tiltAngle     = tiltAngle.clamped(to: -Float.pi/2 ... Float.pi/2)
-        }
+        // Sum of sinusoids at irrational frequency ratios → aperiodic, smooth.
+        // Frequencies chosen so no two axes share a common period.
+        //   Z (roll)  : dominant sloshing axis — two slow components
+        //   X (pitch) : secondary — offset phases, slightly higher freqs
+        //   Y (yaw)   : very subtle slow twist — feels like a boat in open water
+        let A = oscAmplitude
+        angleZ = A       * (0.55 * sin(0.41 * t) + 0.30 * sin(0.73 * t + 1.1)
+                          + 0.15 * sin(1.17 * t + 2.3))
+        angleX = A * 0.6 * (0.50 * sin(0.53 * t + 0.7) + 0.35 * sin(0.89 * t + 2.8)
+                          + 0.15 * sin(1.31 * t + 0.4))
+        angleY = A * 0.2 * (0.60 * sin(0.19 * t + 1.5) + 0.40 * sin(0.37 * t + 3.1))
 
-        // ── 2. Push gravity into simulation ────────────────────────────────
+        // ── 2. Gravity in box-local space ──────────────────────────────────
+        // g_world = (0, -9.81, 0).
+        // g_local = Rᵀ · g_world  where R = Rx(ax)·Ry(ay)·Rz(az)
+        // We compute this analytically for the three Euler angles.
         let g: Float = 9.81
-        sim.updateGravity(
-            x: -g * sin(tiltAngle),
-            y: -g * cos(tiltAngle),
-            z:  0
-        )
+        let cx = cos(angleX), sx = sin(angleX)
+        let cy = cos(angleY), sy = sin(angleY)
+        let cz = cos(angleZ), sz = sin(angleZ)
+
+        // Full rotation matrix R = Rx·Ry·Rz  (column-major, so R * v rotates v)
+        // Transposing gives R⁻¹ to bring world-g into box frame.
+        // R column 1 (world Y basis expressed in box space, i.e. second column of R):
+        //   Ry_world_in_box = Rᵀ · (0,1,0)  = second row of R
+        let gLocalX = g * ( sy * cx)        // second row, col 0 of Rx·Ry·Rz
+        let gLocalY = g * (-sx)              // second row, col 1
+        let gLocalZ = g * ( cy * cx * sz - sy * sx * cz + cx * cy) // approximated below
+
+        // Cleaner: just rotate the gravity vector through the inverse rotation.
+        // Build the 3×3 rotation R = Rx(ax)·Ry(ay)·Rz(az) and apply Rᵀ to g_world.
+        // Row vectors of R (= columns of Rᵀ):
+        let r00 = cy*cz;           let r01 = cy*sz;           let r02 = -sy
+        let r10 = sx*sy*cz-cx*sz;  let r11 = sx*sy*sz+cx*cz;  let r12 = sx*cy
+        let r20 = cx*sy*cz+sx*sz;  let r21 = cx*sy*sz-sx*cz;  let r22 = cx*cy
+        // g_world = (0, -g, 0)  →  g_local = Rᵀ · g_world = -g * (col1 of R)
+        let gx = -g * r01   // = -g * (row0·ĵ) = -g * r01
+        let gy = -g * r11
+        let gz = -g * r21
+        _ = (gLocalX, gLocalY, gLocalZ, r00, r02, r10, r12, r20, r22) // silence warnings
+
+        sim.updateGravity(x: gx, y: gy, z: gz)
 
         // ── 3. Run simulation sub-steps ────────────────────────────────────
         for _ in 0..<stepsPerFrame { sim.step() }
 
-        // ── 4. Build model matrix (rotate around box centre) ───────────────
+        // ── 4. Build model matrix — rotate around box centre ───────────────
         let p      = sim.params
         let centre = SIMD3<Float>(
             (p.boundMinX + p.boundMaxX) * 0.5,
             (p.boundMinY + p.boundMaxY) * 0.5,
             (p.boundMinZ + p.boundMaxZ) * 0.5
         )
-        let model  = simd_float4x4(translation:  centre)
-                   * simd_float4x4(rotationZ: tiltAngle)
-                   * simd_float4x4(translation: -centre)
+        // Apply rotations in same order as the gravity calc: Rx · Ry · Rz
+        let rot   = simd_float4x4(rotationX: angleX)
+                  * simd_float4x4(rotationY: angleY)
+                  * simd_float4x4(rotationZ: angleZ)
+        let model = simd_float4x4(translation: centre)
+                  * rot
+                  * simd_float4x4(translation: -centre)
 
         camera.uniforms(buffer: cameraBuffer, model: model)
 
@@ -261,23 +284,12 @@ final class Renderer: NSObject, MTKViewDelegate {
     func handleScroll(delta: Float)             { camera.zoom(delta: delta)    }
     func resetSimulation()                      { sim.resetParticles()         }
 
-    /// Apply a tilt impulse (angular velocity kick in rad/s).
-    func applyTiltImpulse(_ impulse: Float)     { tiltVelocity += impulse     }
-
     func increaseAmplitude() {
         oscAmplitude = min(oscAmplitude + 0.05, Float.pi / 2.5)
         print("[slosh] amplitude = \(Int(oscAmplitude * 180 / .pi))°")
     }
     func decreaseAmplitude() {
-        oscAmplitude = max(oscAmplitude - 0.05, 0.05)
+        oscAmplitude = max(oscAmplitude - 0.05, 0.03)
         print("[slosh] amplitude = \(Int(oscAmplitude * 180 / .pi))°")
-    }
-    func increaseFrequency() {
-        oscFrequency = min(oscFrequency + 0.05, 1.5)
-        print("[slosh] frequency = \(String(format: "%.2f", oscFrequency)) Hz")
-    }
-    func decreaseFrequency() {
-        oscFrequency = max(oscFrequency - 0.05, 0.05)
-        print("[slosh] frequency = \(String(format: "%.2f", oscFrequency)) Hz")
     }
 }
