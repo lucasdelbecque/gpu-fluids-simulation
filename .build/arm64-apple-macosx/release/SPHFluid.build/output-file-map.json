@@ -1,0 +1,43 @@
+{
+  "": {
+    "dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHFluid.d",
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHFluid.o",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/primary.swiftdeps"
+  },
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Camera.swift": {
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.swift.o",
+    "swiftmodule": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera~partial.swiftmodule",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.swiftdeps",
+    "diagnostics": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.dia"
+  },
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Renderer.swift": {
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.swift.o",
+    "swiftmodule": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer~partial.swiftmodule",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.swiftdeps",
+    "diagnostics": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.dia"
+  },
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/SPHSimulator.swift": {
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.swift.o",
+    "swiftmodule": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator~partial.swiftmodule",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.swiftdeps",
+    "diagnostics": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.dia"
+  },
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/ShaderSources.swift": {
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.swift.o",
+    "swiftmodule": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources~partial.swiftmodule",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.swiftdeps",
+    "diagnostics": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.dia"
+  },
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Types.swift": {
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.swift.o",
+    "swiftmodule": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types~partial.swiftmodule",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.swiftdeps",
+    "diagnostics": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.dia"
+  },
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/main.swift": {
+    "object": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.swift.o",
+    "swiftmodule": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.swiftdeps",
+    "diagnostics": "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.dia"
+  }
+}

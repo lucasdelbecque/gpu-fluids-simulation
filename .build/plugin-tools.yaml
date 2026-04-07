@@ -1,0 +1,66 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "SPHFluid-arm64-apple-macosx-release.exe": ["<SPHFluid-arm64-apple-macosx-release.exe>"]
+  "SPHFluid-arm64-apple-macosx-release.module": ["<SPHFluid-arm64-apple-macosx-release.module>"]
+  "main": ["<SPHFluid-arm64-apple-macosx-release.exe>","<SPHFluid-arm64-apple-macosx-release.module>"]
+  "test": ["<SPHFluid-arm64-apple-macosx-release.exe>","<SPHFluid-arm64-apple-macosx-release.module>"]
+default: "main"
+nodes:
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Camera.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Renderer.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/SPHSimulator.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/ShaderSources.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Types.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/main.swift"]
+    outputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/sources"]
+    description: "Write auxiliary file /Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/sources"
+
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.swift.o"]
+    outputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.product/Objects.LinkFileList"
+
+  "/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Library/Developer/CommandLineTools/usr/bin/swiftc"]
+    outputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt"
+
+  "<SPHFluid-arm64-apple-macosx-release.exe>":
+    tool: phony
+    inputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid"]
+    outputs: ["<SPHFluid-arm64-apple-macosx-release.exe>"]
+
+  "<SPHFluid-arm64-apple-macosx-release.module>":
+    tool: phony
+    inputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/Modules/SPHFluid.swiftmodule"]
+    outputs: ["<SPHFluid-arm64-apple-macosx-release.module>"]
+
+  "C.SPHFluid-arm64-apple-macosx-release.exe":
+    tool: shell
+    inputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.product/Objects.LinkFileList"]
+    outputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid"]
+    description: "Linking ./.build/arm64-apple-macosx/release/SPHFluid"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-L","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release","-o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid","-module-name","SPHFluid","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-dead_strip","-Xlinker","-alias","-Xlinker","_SPHFluid_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.SPHFluid-arm64-apple-macosx-release.module":
+    tool: shell
+    inputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Camera.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Renderer.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/SPHSimulator.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/ShaderSources.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/Types.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/main.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/sources"]
+    outputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Camera.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Renderer.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/SPHSimulator.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/ShaderSources.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/Types.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/main.swift.o","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/Modules/SPHFluid.swiftmodule"]
+    description: "Compiling Swift Module 'SPHFluid' (6 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","SPHFluid","-emit-dependencies","-emit-module","-emit-module-path","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/Modules/SPHFluid.swiftmodule","-output-file-map","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/output-file-map.json","-whole-module-optimization","-num-threads","8","-c","@/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/SPHFluid.build/sources","-I","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/Modules","-target","arm64-apple-macosx13.0","-whole-module-optimization","-num-threads","8","-serialize-diagnostics","-O","-j8","-DSWIFT_PACKAGE","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/.build/arm64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","SPHFluid_main","-color-diagnostics","-swift-version","5","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","gpu_fluids_simulation"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Sources/SPHFluid/","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Package.swift","/Users/lucasdelbecque/Desktop/4C 55 4B/DEV/gpu-fluids-simulation/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+
